@@ -173,19 +173,6 @@ This project is configured for deployment on **Vercel**.
 
 ---
 
-## 📸 Screenshots
-
-### Homepage
-![Homepage](https://via.placeholder.com/800x400?text=Homepage+Screenshot)
-
-### Product Listing
-![Products](https://via.placeholder.com/800x400?text=Products+Page+Screenshot)
-
-### Shopping Cart
-![Cart](https://via.placeholder.com/800x400?text=Cart+Page+Screenshot)
-
----
-
 ## 🤝 Contributing
 
 Contributions are welcome! Please follow these steps:
