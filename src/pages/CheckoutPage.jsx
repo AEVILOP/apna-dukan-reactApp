@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
-import { CreditCard, Lock, CheckCircle } from 'lucide-react';
+import { CreditCard, Lock, Unlock, CheckCircle } from 'lucide-react';
 import { useCart } from '../context/CartContext';
 import toast from 'react-hot-toast';
 
@@ -14,8 +14,8 @@ const CheckoutPage = () => {
     const {
         register,
         handleSubmit,
-        formState: { errors },
-    } = useForm();
+        formState: { errors, isValid },
+    } = useForm({ mode: 'onChange' });
 
     const subtotal = getCartTotal();
     const shipping = subtotal > 5000 ? 0 : 100;
@@ -201,9 +201,17 @@ const CheckoutPage = () => {
                                         </label>
                                         <input
                                             type="text"
-                                            {...register('zip', { required: 'ZIP code is required' })}
+                                            {...register('zip', {
+                                                required: 'ZIP code is required',
+                                                pattern: {
+                                                    value: /^[0-9]{6}$/,
+                                                    message: 'ZIP code must be exactly 6 digits'
+                                                }
+                                            })}
                                             className="input-field"
-                                            placeholder="10001"
+                                            placeholder="123456"
+                                            maxLength="6"
+                                            onInput={(e) => e.target.value = e.target.value.replace(/[^0-9]/g, '')}
                                         />
                                         {errors.zip && (
                                             <p className="text-red-500 text-sm mt-1">{errors.zip.message}</p>
@@ -225,10 +233,17 @@ const CheckoutPage = () => {
                                         </label>
                                         <input
                                             type="text"
-                                            {...register('cardNumber', { required: 'Card number is required' })}
+                                            {...register('cardNumber', {
+                                                required: 'Card number is required',
+                                                pattern: {
+                                                    value: /^[0-9]{12}$/,
+                                                    message: 'Card number must be exactly 12 digits'
+                                                }
+                                            })}
                                             className="input-field"
-                                            placeholder="1234 5678 9012 3456"
-                                            maxLength="19"
+                                            placeholder="123456789012"
+                                            maxLength="12"
+                                            onInput={(e) => e.target.value = e.target.value.replace(/[^0-9]/g, '')}
                                         />
                                         {errors.cardNumber && (
                                             <p className="text-red-500 text-sm mt-1">{errors.cardNumber.message}</p>
@@ -237,13 +252,20 @@ const CheckoutPage = () => {
                                     <div className="grid grid-cols-2 gap-4">
                                         <div>
                                             <label className="block text-sm font-medium text-gray-700 mb-2">
-                                                Expiry Date *
+                                                Expiry Date (MM/YY) *
                                             </label>
                                             <input
-                                                type="text"
-                                                {...register('expiry', { required: 'Expiry date is required' })}
+                                                type="month"
+                                                {...register('expiry', {
+                                                    required: 'Expiry date is required',
+                                                    validate: (value) => {
+                                                        const selectedDate = new Date(value);
+                                                        const today = new Date();
+                                                        return selectedDate >= today || 'Expiry date must be in the future';
+                                                    }
+                                                })}
                                                 className="input-field"
-                                                placeholder="MM/YY"
+                                                min={new Date().toISOString().slice(0, 7)}
                                             />
                                             {errors.expiry && (
                                                 <p className="text-red-500 text-sm mt-1">{errors.expiry.message}</p>
@@ -255,10 +277,17 @@ const CheckoutPage = () => {
                                             </label>
                                             <input
                                                 type="text"
-                                                {...register('cvv', { required: 'CVV is required' })}
+                                                {...register('cvv', {
+                                                    required: 'CVV is required',
+                                                    pattern: {
+                                                        value: /^[0-9]{3,4}$/,
+                                                        message: 'CVV must be 3 or 4 digits'
+                                                    }
+                                                })}
                                                 className="input-field"
                                                 placeholder="123"
                                                 maxLength="4"
+                                                onInput={(e) => e.target.value = e.target.value.replace(/[^0-9]/g, '')}
                                             />
                                             {errors.cvv && (
                                                 <p className="text-red-500 text-sm mt-1">{errors.cvv.message}</p>
@@ -319,11 +348,16 @@ const CheckoutPage = () => {
                                     </div>
                                 </div>
 
+
                                 <button
                                     type="submit"
-                                    className="w-full btn-primary mt-6 flex items-center justify-center space-x-2"
+                                    disabled={!isValid}
+                                    className={`w-full mt-6 flex items-center justify-center space-x-2 py-3 rounded-lg font-medium transition-all duration-300 ${isValid
+                                            ? 'bg-green-600 hover:bg-green-700 text-white cursor-pointer'
+                                            : 'bg-red-600 text-white cursor-not-allowed opacity-75'
+                                        }`}
                                 >
-                                    <Lock size={18} />
+                                    {isValid ? <Unlock size={18} /> : <Lock size={18} />}
                                     <span>Place Order</span>
                                 </button>
 

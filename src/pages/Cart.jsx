@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { useCart } from '../context/CartContext';
 import { Trash2, Plus, Minus } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
@@ -5,6 +6,11 @@ import { Link, useNavigate } from 'react-router-dom';
 const Cart = () => {
     const { cart, removeFromCart, updateQuantity, getCartTotal } = useCart();
     const navigate = useNavigate();
+
+    // Scroll to top when cart page loads (especially for mobile)
+    useEffect(() => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }, []);
 
     if (cart.length === 0) {
         return (
