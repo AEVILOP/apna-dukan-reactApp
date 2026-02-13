@@ -209,6 +209,13 @@ createRoot(document.getElementById('root')).render(
 
 **Key Features:**
 ```javascript
+
+import { Heart, ShoppingCart, Store, Menu, X } from 'lucide-react';
+import { Link, useLocation } from 'react-router-dom';
+import { useCart } from '../context/CartContext';
+import { useWishlist } from '../context/WishlistContext';
+import { useState } from 'react';
+
 const Navbar = () => {
     const { cart } = useCart();              // Get cart from context
     const { wishlist } = useWishlist();      // Get wishlist from context

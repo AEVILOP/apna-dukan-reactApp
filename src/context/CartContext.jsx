@@ -54,10 +54,7 @@ export const CartProvider = ({ children }) => {
 
         setCart(currentCart =>
             currentCart.map(item =>
-                item.id === productId
-                    ? { ...item, quantity }
-                    : item
-            )
+                item.id === productId ? { ...item, quantity } : item)
         );
     };
 

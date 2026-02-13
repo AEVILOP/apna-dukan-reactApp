@@ -45,8 +45,8 @@ const Navbar = () => {
                                 key={link.path}
                                 to={link.path}
                                 className={`px-4 py-2 rounded-lg font-medium transition-all ${isActive(link.path)
-                                        ? 'bg-blue-600 text-white shadow-md'
-                                        : 'text-gray-700 hover:bg-blue-50 hover:text-blue-600'
+                                    ? 'bg-blue-600 text-white shadow-md'
+                                    : 'text-gray-700 hover:bg-blue-50 hover:text-blue-600'
                                     }`}
                             >
                                 {link.label}
@@ -102,8 +102,8 @@ const Navbar = () => {
                                     to={link.path}
                                     onClick={() => setMobileMenuOpen(false)}
                                     className={`px-4 py-3 rounded-lg font-medium transition-all ${isActive(link.path)
-                                            ? 'bg-blue-600 text-white'
-                                            : 'text-gray-700 hover:bg-blue-50 hover:text-blue-600'
+                                        ? 'bg-blue-600 text-white'
+                                        : 'text-gray-700 hover:bg-blue-50 hover:text-blue-600'
                                         }`}
                                 >
                                     {link.label}

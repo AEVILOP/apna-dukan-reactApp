@@ -143,11 +143,11 @@ const ProductDetail = () => {
                             </div>
 
                             {/* Stock Status */}
-                            <div className="mb-6">
+                            {/* <div className="mb-6">
                                 <p className={`font-medium ${product.inStock ? 'text-green-600' : 'text-red-600'}`}>
                                     {product.inStock ? `In Stock (${product.stock} available)` : 'Out of Stock'}
                                 </p>
-                            </div>
+                            </div> */}
 
                             {/* Quantity Selector */}
                             <div className="mb-6">
